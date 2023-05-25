@@ -13,7 +13,8 @@ public class CustomerService {
 
     private final CustomerDAO customerDAO;
 
-    public CustomerService(@Qualifier("jpa") CustomerDAO customerDAO) {
+    public CustomerService(@Qualifier("jdbc") CustomerDAO customerDAO) {
+
         this.customerDAO = customerDAO;
     }
 
@@ -56,7 +57,7 @@ public class CustomerService {
             customer.setEmail(updateRequest.email());
             changes = true;
         }
-        if(updateRequest.age()!=null && updateRequest.age()!=customer.getAge()){
+        if(updateRequest.age()!=null && updateRequest.age() != customer.getAge()){
             customer.setAge(updateRequest.age());
             changes = true;
         }

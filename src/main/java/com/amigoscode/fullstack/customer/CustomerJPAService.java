@@ -1,8 +1,5 @@
 package com.amigoscode.fullstack.customer;
 
-import com.amigoscode.fullstack.exception.DuplicateResourceException;
-import com.amigoscode.fullstack.exception.RequestValidationException;
-import com.amigoscode.fullstack.exception.ResourceNotFound;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,11 +17,13 @@ public class CustomerJPAService implements CustomerDAO {
 
     @Override
     public List<Customer> selectAllCustomers() {
+
         return customerRepository.findAll();
     }
 
     @Override
     public Optional<Customer> selectCustomerById(Integer id) {
+
         return customerRepository.findById(id);
     }
 
@@ -35,11 +34,13 @@ public class CustomerJPAService implements CustomerDAO {
 
     @Override
     public boolean existsPersonWithEmail(String email) {
+
         return customerRepository.existsCustomerByEmail(email);
     }
 
     @Override
     public boolean existsPersonWithId(Integer id) {
+
         return customerRepository.existsCustomerById(id);
     }
 

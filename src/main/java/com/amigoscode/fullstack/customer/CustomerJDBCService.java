@@ -1,6 +1,7 @@
 package com.amigoscode.fullstack.customer;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,20 @@ public class CustomerJDBCService implements CustomerDAO{
 
     @Override
     public List<Customer> selectAllCustomers() {
-        return null;
+        var sql = """
+                SELECT * FROM customers
+                """;
+        RowMapper<Customer> rowMapper = (rs, rowNum) -> {
+            Customer customer = new Customer(
+                    rs.getInt("id"),
+                    rs.getString("customer_name"),
+                    rs.getString("customer_email"),
+                    rs.getInt("customer_age")
+            );
+            return customer;
+        };
+        List<Customer> customers = jdbcTemplate.query(sql, rowMapper);
+        return customers;
     }
 
     @Override

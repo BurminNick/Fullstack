@@ -2,10 +2,13 @@ package com.amigoscode.fullstack;
 
 import com.amigoscode.fullstack.customer.Customer;
 import com.amigoscode.fullstack.customer.CustomerRepository;
+import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Random;
 
 @SpringBootApplication
 public class FullstackApplication {
@@ -17,12 +20,15 @@ public class FullstackApplication {
     @Bean
     CommandLineRunner runner(CustomerRepository customerRepository){
         return args -> {
+            var faker = new Faker();
+            Random random = new Random();
 
-            Customer nadya = new Customer("Nadya","nadya@gmail.com", 37);
-            Customer nick = new Customer("Nick","nick@gmail.com", 38);
+            Customer customer = new Customer(
+                    faker.name().fullName(),
+                    faker.internet().emailAddress(),
+                    random.nextInt(16,80));
 
-            customerRepository.save(nadya);
-            customerRepository.save(nick);
+           customerRepository.save(customer);
         };
     }
 }

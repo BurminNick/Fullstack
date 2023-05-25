@@ -1,10 +1,8 @@
 package com.amigoscode.fullstack.customer;
 
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -17,8 +15,8 @@ public class CustomerController {
     }
 
     @GetMapping()
-    public List<CustomerDTO> allCustomers(){
-        return customerService.allCustomers();
+    public List<Customer> allCustomers(){
+        return customerService.getAllCustomers();
     }
 
     @GetMapping("/{id}")
@@ -40,7 +38,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable("id") Integer id){
-        customerService.deleteCustomer(id);
+        customerService.deleteCustomerById(id);
     }
 
 }

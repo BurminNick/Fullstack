@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository("jdbc")
 public class CustomerJDBCService implements CustomerDAO{
+
     private final JdbcTemplate jdbcTemplate;
     private final CustomerRowMapper customerRowMapper;
 
@@ -67,7 +68,7 @@ public class CustomerJDBCService implements CustomerDAO{
         var sql = """
                 DELETE FROM customers WHERE id = ?
                 """;
-        int result = jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(sql, id);
     }
 
     @Override

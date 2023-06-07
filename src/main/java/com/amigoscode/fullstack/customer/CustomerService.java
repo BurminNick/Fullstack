@@ -14,7 +14,6 @@ public class CustomerService {
     private final CustomerDAO customerDAO;
 
     public CustomerService(@Qualifier("jdbc") CustomerDAO customerDAO) {
-
         this.customerDAO = customerDAO;
     }
 
@@ -29,10 +28,12 @@ public class CustomerService {
 
     public void addCustomer(CustomerRegistrationRequest customerRegistrationRequest){
         String email = customerRegistrationRequest.email();
+
         if(customerDAO.existsPersonWithEmail(email)){
             throw new DuplicateResourceException("email is already taken");
         }
-        customerDAO.insertCustomer(new Customer(
+        customerDAO.insertCustomer(
+                new Customer(
                 customerRegistrationRequest.name(),
                 email,
                 customerRegistrationRequest.age()
@@ -54,6 +55,9 @@ public class CustomerService {
             changes = true;
         }
         if(updateRequest.email()!=null && !updateRequest.email().equals(customer.getEmail())){
+            if(customerDAO.existsPersonWithEmail(updateRequest.email())){
+                throw new DuplicateResourceException("email is already taken");
+            }
             customer.setEmail(updateRequest.email());
             changes = true;
         }

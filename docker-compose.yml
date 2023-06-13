@@ -13,6 +13,18 @@ services:
     networks:
       - db
     restart: unless-stopped
+  fullstack:
+    container_name: fullstack
+    image: burminnick/fullstack
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+    ports:
+      - "8088:8080"
+    networks:
+      - db
+    depends_on:
+      - db
+    restart: unless-stopped
 
 networks:
   db:
